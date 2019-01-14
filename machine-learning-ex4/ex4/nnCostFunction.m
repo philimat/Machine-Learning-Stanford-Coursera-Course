@@ -61,8 +61,31 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+X = [ones(m,1) X];
+Z_2 = X*Theta1';
+A_2 = sigmoid(Z_2);
+A_2 = [ones(m,1) A_2];
 
+Z_3 = A_2*Theta2';
+A_3 = sigmoid(Z_3);
 
+for k = 1:num_labels
+    J = J + (-(y == k)'*log(A_3(:,k)) - (1 -(y == k))'*log(1-A_3(:,k)))/m;
+end
+
+% Add regularization to cost function while ignoring theta_0 intercept term
+T_1 = eye(size(Theta1,2));
+T_1(1,1) = 0;
+T_2 = eye(size(Theta2,2));
+T_2(1,1) = 0;
+
+J = J + (lambda/(2*m))*(trace((T_1')*(Theta1')*Theta1*T_1) + trace((T_2')*(Theta2')*Theta2*T_2));
+
+% Vectorized gradient
+% grad = X'*(A_3-y)/m;
+
+% Add regularization to gradient
+% grad = grad + lambda*t*theta/m ;
 
 
 

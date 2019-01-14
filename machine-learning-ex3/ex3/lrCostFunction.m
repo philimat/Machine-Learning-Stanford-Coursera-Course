@@ -37,7 +37,7 @@ grad = zeros(size(theta));
 %
 
 % Vectorized logistic regression cost function
-J = (-y'*log(sigmoid(X*theta)) - (ones(m,1)-y)'*log(1-sigmoid(X*theta)))/m;
+J = (-y'*log(sigmoid(X*theta)) - (ones(m,1)-y)'*log(ones(m,1)-sigmoid(X*theta)))/m;
 
 % Add regularization to cost function while ignoring theta_0 intercept term
 t = eye(length(theta));
